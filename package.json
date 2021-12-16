@@ -1,0 +1,9 @@
+{
+  "name": "words-chains-resolver",
+  "version": "1.0.0",
+  "description": "Construct the shortest sequences that connect two different words changing each time one or more letters",
+  "scripts": {
+    "demo": "node --max-old-space-size=8192 words-chains-resolver rana uomo 1"
+  },
+  "dependencies": {}
+}
