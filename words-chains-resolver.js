@@ -5,8 +5,8 @@ const singleResult = false;
 //END CONFIGURATION SECTION
 
 const args = process.argv.slice(2);
-const fromWord = args[0];
-const toWord = args[1];
+const fromWord = args[0].toLowerCase();
+const toWord = args[1].toLowerCase();
 const numOfDifferentLetters = args[2]?parseInt(args[2]):1;
 if (fromWord.length != toWord.length) throw 'The provided words must have the same lenght';
 if (numOfDifferentLetters > fromWord.length) throw 'The maximum number of different letters is ' + fromWord.length;
@@ -69,7 +69,9 @@ const saveResultFn = treeNode => {
 const buildTreeFlatFn = () => {
   let toProcessList = [tree];
   let nextProcessList = [];
+  let deep = 1;
   do {
+    console.info('Working on deep ' + deep + '. Analizing ' + toProcessList.length + ' words...');
     for (let x=0;x<toProcessList.length;x++) {
       const node = toProcessList[x];
       for (let i=0;i<wordObjList.length;i++) {
@@ -93,12 +95,13 @@ const buildTreeFlatFn = () => {
     }
     toProcessList = nextProcessList;
     nextProcessList = [];
+    deep++;
   } while(toProcessList.length != 0 && resultList.length == 0);
 };
 
 initWordListFn().then(()=>{
-  console.log('Loaded words: ' + wordObjList.length);
-  console.log('Generating results...');
+  console.info('Loaded words: ' + wordObjList.length);
+  console.info('Generating results...');
   buildTreeFlatFn();
   console.log('Results:');
   resultList.forEach(chain => console.log(chain));
